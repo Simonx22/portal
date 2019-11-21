@@ -1,5 +1,10 @@
 FROM node:lts-buster
 
+# Add Google Chrome repositories
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
+RUN echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list
+# Install Google Chrome, audio and other misc packages including minimal runtime used for executing non GUI Java programs
+
 # Install Chromium, audio and other misc packages, cleanup, create Chromium policies folders, workarounds
 RUN apt-get update && apt-get -y dist-upgrade && \
     apt-get --no-install-recommends -y install \
@@ -28,18 +33,11 @@ RUN apt-get update && apt-get -y dist-upgrade && \
         sudo \
         grep \
         procps \
-        chromium \
+        google-chrome-stable \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
     && mkdir -p /var/run/dbus \
-    && mkdir -p /etc/chromium/policies/managed /etc/chromium/policies/recommended \
+    && mkdir -p /etc/opt/chrome/policies/managed /etc/opt/chrome/policies/recommended \
     && mkdir /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && chown root /tmp/.X11-unix
-    
-# Install Widevine component for Chromium
-RUN WIDEVINE_VERSION=$(wget --quiet -O - https://dl.google.com/widevine-cdm/versions.txt | tail -n 1) && \
-    wget "https://dl.google.com/widevine-cdm/$WIDEVINE_VERSION-linux-x64.zip" -O /tmp/widevine.zip && \
-    unzip -p /tmp/widevine.zip libwidevinecdm.so > /usr/lib/chromium/libwidevinecdm.so && \
-    chmod 644 /usr/lib/chromium/libwidevinecdm.so && \
-    rm /tmp/widevine.zip
 
 # Add normal user
 RUN useradd glados --shell /bin/bash --create-home && usermod -a -G audio glados
@@ -49,9 +47,9 @@ WORKDIR /home/glados/.internal
 COPY . .
 
 # Chromium Policies
-COPY ./configs/chromium_policy.json /etc/chromium/policies/managed/policies.json
+COPY ./configs/chromium_policy.json /etc/opt/chrome/policies/managed/policies.json
 # Chromium Preferences
-COPY ./configs/master_preferences.json /etc/chromium/master_preferences
+COPY ./configs/master_preferences.json /etc/opt/chrome/master_preferences
 # Pulseaudio Configuration
 COPY ./configs/pulse_config.pa /tmp/pulse_config.pa
 # Openbox Configuration
