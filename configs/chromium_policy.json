@@ -1,6 +1,7 @@
 {
     "AllowFileSelectionDialogs": false,
     "PromptForDownloadLocation": false,
+    "MetricsReportingEnabled": true,
     "BookmarkBarEnabled": false,
     "URLBlacklist": [
         "file://*",
