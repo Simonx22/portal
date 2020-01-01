@@ -18,10 +18,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
-"@types/fluent-ffmpeg@^2.1.11":
-  version "2.1.11"
-  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.11.tgz#4706613e9e3bbd653ff801b23c5fdac976f62ec0"
-  integrity sha512-Mt4nAJVsQdYAya0I/VEQ51PXgzi/UVGf/mih3uRnnQVC3ZaugEzEdnISjkGcqyHuKClVG2KrMbw6+krh3YS50A==
+"@types/fluent-ffmpeg@^2.1.13":
+  version "2.1.13"
+  resolved "https://registry.yarnpkg.com/@types/fluent-ffmpeg/-/fluent-ffmpeg-2.1.13.tgz#bfffbcf298b0980924e9ba9aa471aba234626afb"
+  integrity sha512-hg87ZQb9WVcNGQHNhrYwWJM0ARNYbQbLGh1c6CfPl55/I+BH5UTpFJAr5aZWYGbl8BFVY82oF5iG4I+Ra3btiQ==
   dependencies:
     "@types/node" "*"
 
